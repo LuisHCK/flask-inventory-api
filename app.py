@@ -1,8 +1,7 @@
 import os
 from flask import Flask
 from extensions import jwt, Pony
-from routes.auth_route import auth_blueprint
-from routes import product_routes
+from routes import auth_routes, product_routes, inventory_routes
 from database.database import db
 from controllers.auth_controller import register_root_admin
 from datetime import timedelta
@@ -22,8 +21,9 @@ def create_app():
 
     
     # Register app routes
-    app.register_blueprint(auth_blueprint, url_prefix='/auth')
+    app.register_blueprint(auth_routes.router, url_prefix='/auth')
     app.register_blueprint(product_routes.router, url_prefix='/products')
+    app.register_blueprint(inventory_routes.router, url_prefix='/inventories')
 
     # Only if needed
     register_root_admin()

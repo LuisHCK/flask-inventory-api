@@ -17,6 +17,7 @@ class User(db.Entity):
     updated_at = Optional(datetime, default=lambda: datetime.now())
     products = Set('Product')
     sales = Set('Sale')
+    inventories = Set('Inventory')
     password_digest = Required(str, hidden=True, index='idx_user__password_digest')
 
 
@@ -45,6 +46,9 @@ class Inventory(db.Entity):
     name = Required(str, unique=True)
     description = Optional(str)
     inventory_products = Set('InventoryProduct')
+    user = Required(User)
+    created_at = Optional(datetime, default=lambda: datetime.now(), index='idx_inventory__created_at')
+    updated_at = Optional(datetime, default=lambda: datetime.now())
 
 
 class InventoryProduct(db.Entity):
@@ -54,6 +58,8 @@ class InventoryProduct(db.Entity):
     product = Required(Product)
     inventory = Required(Inventory)
     sale_price = Required(Decimal, precision=2)
+    created_at = Optional(datetime, default=lambda: datetime.now(), index='idx_inventory_product__created_at')
+    updated_at = Optional(datetime, default=lambda: datetime.now())
 
 
 class Sale(db.Entity):
