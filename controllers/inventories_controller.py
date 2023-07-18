@@ -123,6 +123,7 @@ def delete_inventory_product(inventory_id, product_id):
 
 
 def __whitelisted_params(source):
-    whitelist = ["purchase_price", "stock", "product", "sale_price"]
+    whitelist = ["purchase_price", "stock", "product",
+                 "sale_price", "name", "description"]
 
     return dict((k, source[k]) for k in whitelist if k in source)
