@@ -69,10 +69,8 @@ def show(id):
 def update(id):
     sale = Sale.get(id=id)
 
-    if sale:
-        return jsonify({"message": "Sales can't be deleted"}), 422
-    return jsonify({"message": "Sale not found"}), 404
-
+    if not sale:
+        return {"message": "Sale not found"}, 404
 
 @jwt_required()
 def destroy(id):
@@ -83,7 +81,6 @@ def __whitelisted_params(source):
     whitelist = [
         "payment_reference",
         "payment_type",
-        "status",
         "notes"
     ]
 
